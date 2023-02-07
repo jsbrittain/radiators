@@ -1,12 +1,19 @@
+"""
+Display radiator monitor logs
+
+Figure is presented in a popup to the user if run directly, or returned
+as a byte object for rendering as an img HTML source.
+"""
+
+from io import BytesIO
 import pandas as pd
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-from io import BytesIO
 import numpy as np
 
 
-def display_data(display=False):
+def display_data(timescale='24h', display=False):
     """Load temperature logs and return png image buffer for rendering.
 
     Arguments
@@ -26,7 +33,7 @@ def display_data(display=False):
             )
     df['datetime'] = pd.to_datetime(df['datetime'])
     df.set_index('datetime', inplace=True)
-    df = df.last('24h')
+    df = df.last(timescale)
     device_names = df['device_name'].unique()
 
     if display:
@@ -34,7 +41,7 @@ def display_data(display=False):
     else:
         fig = Figure(figsize=[8, 12])
         axs = fig.subplots(len(device_names), 1)
-    ymax = 0.5+max(max(df['target_temp']), max(df['current_temp']))
+    ymax = 0.5+max(df['target_temp'], df['current_temp'])
     xmin = min(df.index)
     xmax = max(df.index)
     status_line = 1.0   # y-location of status line
@@ -79,6 +86,7 @@ def display_data(display=False):
         ax.set_ylabel(device_name)
         ax.set_ylim(0, ymax)
         ax.set_xlim(xmin, xmax)
+        # pylint: disable=anomalous-backslash-in-string
         ax.text(0.8, 0.8, f"{device_df['current_temp'][-1]}$^\circ$C",
                 transform=ax.transAxes, color="black", fontsize=15)
         if device_ix == 0:
