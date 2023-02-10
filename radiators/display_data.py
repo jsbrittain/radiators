@@ -41,7 +41,7 @@ def display_data(timescale='24h', display=False):
     else:
         fig = Figure(figsize=[8, 12])
         axs = fig.subplots(len(device_names), 1)
-    ymax = 0.5+max(df['target_temp'], df['current_temp'])
+    ymax = 0.5+max(max(df['target_temp']), max(df['current_temp']))
     xmin = min(df.index)
     xmax = max(df.index)
     status_line = 1.0   # y-location of status line
