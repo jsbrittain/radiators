@@ -87,7 +87,7 @@ def display_data(timescale='24h', display=False):
         ax.set_ylim(0, ymax)
         ax.set_xlim(xmin, xmax)
         # pylint: disable=anomalous-backslash-in-string
-        ax.text(0.8, 0.8, f"{device_df['current_temp'][-1]}$^\circ$C",
+        ax.text(0.8, 0.8, rf"{device_df['current_temp'][-1]}$^\circ$C",
                 transform=ax.transAxes, color="black", fontsize=15)
         if device_ix == 0:
             ax.legend(loc='upper left')
