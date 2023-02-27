@@ -5,7 +5,7 @@ Monitor radiators using tinytuya and append to log file.
 import json
 from time import sleep
 from datetime import datetime
-import tinytuya # pylint: disable=import-error
+import tinytuya  # pylint: disable=import-error
 
 
 def run():
@@ -43,7 +43,7 @@ def run():
                     myfile.write(logstr + "\n")
                 if display:
                     print(logstr)
-            except 'dps': # pylint: disable=catching-non-exception
+            except 'dps':  # pylint: disable=catching-non-exception
                 if display:
                     print(f"{now},{device['name']} - fail")
         sleep(sampling_interval)

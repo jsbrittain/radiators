@@ -14,7 +14,9 @@ def display_graph(timescale="24h") -> str:
     buf = display_data.display_data(timescale)
     data = base64.b64encode(buf.getbuffer()).decode("ascii")
     html = f"""
-<p style="margin-left: 30px; margin-top: 20px;"><font size=5><b>Radiators ({timescale})</b></font></p>
+<p style="margin-left: 30px; margin-top: 20px;">
+<font size=5><b>Radiators ({timescale})</b></font>
+</p>
 <div><img src='data:image/png;base64,{data}'/></div>
 """
     return html
